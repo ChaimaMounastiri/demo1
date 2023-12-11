@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upteck-back-deployment
+  namespace: upteck
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: upteck-back
+  template:
+    metadata:
+      labels:
+        app: upteck-back
+    spec:
+      containers:
+      - name: upteck-back
+        image: raykadri/upteck_crud_springboot-app:v1
+
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: upteck-app-config
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "0.1"
+          limits:
+            memory: "512Mi"
+            cpu: "0.5"
+
